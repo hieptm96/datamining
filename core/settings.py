@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'datamining',
         'USER': 'root',
-        'PASSWORD': 'hiep12',
+        'PASSWORD': '1',
         'HOST': '127.0.0.1',
         'PORT': ''
     }
