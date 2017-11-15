@@ -1,8 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Question, Choice
+from .models import News, Cluster, DocumentRepresentation
 
-admin.site.register(Question)
-admin.site.register(Choice)
+admin.site.register(News)
+admin.site.register(Cluster)
+admin.site.register(DocumentRepresentation)
 
