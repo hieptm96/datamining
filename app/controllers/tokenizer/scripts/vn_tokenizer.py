@@ -11,6 +11,7 @@
 # TO DO : Add general help, program description, format of output tokenized text.
 #
 #===============================================================================
+from ...stop_words import stop_words
 from ....models import News
 from datetime import datetime
 import sys, re, math, unicodedata, numpy as np, codecs, pickle, json
@@ -248,14 +249,17 @@ def tokenize(date):
 				sents = []
 				sents.append(data['title'].split()) # Split line on space to get syllables + etc.
 				title = tokenize_a_sentence(sents)
+				title = stop_words.remove_stop_words(title)
 
 				sents = []
 				sents.append(data['description'].split()) # Split line on space to get syllables + etc.
 				description = tokenize_a_sentence(sents)
+				description = stop_words.remove_stop_words(description)
 
 				sents = []
 				sents.append(data['content'].split()) # Split line on space to get syllables + etc.
 				content = tokenize_a_sentence(sents)
+				content = stop_words.remove_stop_words(content)
 
 				data_output = {}
 				data_output['url'] = url
