@@ -15,7 +15,7 @@ class News(models.Model):
   description = models.TextField()
   url = models.TextField()
   content = models.TextField()
-  time = models.DateTimeField('date published')
+  time = models.DateTimeField(blank=True, null=True)
 
 class Cluster(models.Model):
   cluster_core = models.IntegerField()

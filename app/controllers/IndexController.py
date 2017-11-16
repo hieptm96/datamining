@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from .tokenizer.scripts import vn_tokenizer
 
 def index(request):
-  vn_tokenizer.tokenize("thuan.txt", "haha.txt")
+  vn_tokenizer.tokenize("2017-11-16")
   return HttpResponse("Hello,e at the polls index.")
 
 def remove(request):
