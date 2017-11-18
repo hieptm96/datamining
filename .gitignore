@@ -6,3 +6,4 @@ __pycache__/
 /core/settings.pyc
 /raw_data
 /tokenized_data
+/app/migrations

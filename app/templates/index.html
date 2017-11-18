@@ -1,1 +1,11 @@
-{{ a }}
+<table border="1">
+  <tbody>
+    {% for array in matrixValue %}
+    <tr>
+      {% for value in array  %}
+        <td style="padding: 15px;">{{ value }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -3,13 +3,41 @@ from .tokenizer.scripts import vn_tokenizer
 from .vocabulary import vocabulary_set
 from .tf_idf import tfidf
 
+import numpy
+
+import nltk
+import string
+
+# used for looping through folders/files
+from os import listdir
+from os.path import isfile, join
+
+#Calc tfidf and cosine similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from django.shortcuts import render
+
 def index(request):
-  # vn_tokenizer.tokenize()
+  vn_tokenizer.tokenize()
   result = tfidf.execute_tfidf('2017-11-01', '2017-11-02')
   f = open('test.txt', 'w')
-  f.write(str(result[0][0]))
+  f.write(str(result))
+
+  matrixValue = []
+  for i in range(len(result)):
+    row = []
+    for j in range(len(result)):
+      numValue = cosine_similarity(result[i], result[j])[0][0]
+      row.append(numValue)
+    matrixValue.append(row)
+
   # print (len(result[0]))
-  return HttpResponse(result.shape)
+  # return HttpResponse(result)
+
+  # return HttpResponse(cosine_distance(result[0], result[0]))
+  return render(request, "index.html", {
+    'matrixValue': matrixValue
+  });
 
 def make_vocabulary_set(request):
     vocabulary_set.make_vocabulary_set()
