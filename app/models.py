@@ -15,7 +15,9 @@ class News(models.Model):
   description = models.TextField()
   url = models.TextField()
   content = models.TextField()
-  time = models.DateTimeField(blank=True, null=True)
+  date = models.DateField(blank=True, null=True)
+  file_name = models.TextField()
+  add_to_vocabulary_set = models.IntegerField(default=0)
 
 class Cluster(models.Model):
   cluster_core = models.IntegerField()
@@ -24,3 +26,8 @@ class Cluster(models.Model):
 class DocumentRepresentation(models.Model):
   representation = models.TextField()
   cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
+
+class Vocabulary(models.Model):
+  fromDate = models.DateField()
+  toDate = models.DateField()
+  vocabulary_set = models.TextField()
