@@ -2,8 +2,8 @@
   <tbody>
     {% for array in matrixValue %}
     <tr>
-      {% for value in array  %}
-        <td style="padding: 15px;">{{ value }}</td>
+      {% for value in array %}
+        <td style="padding: 15px;">{{ value }} ({{forloop.parentloop.counter}}, {{forloop.counter}})</td>
       {% endfor %}
     </tr>
     {% endfor %}
