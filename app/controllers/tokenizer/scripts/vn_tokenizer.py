@@ -179,7 +179,7 @@ def tokenize_a_sentence(sents):
 		return sent
 
 def tokenize():
-
+	number_of_files = 0
 	import os
 
 	#read all json files from input directory
@@ -215,48 +215,55 @@ def tokenize():
 					# print (file)
 					if file.endswith(".json"):
 
+						try:
+
 		                # check is this file read
-						check_news = News.objects.filter(file_name=file).first()
-						if (check_news):
+							check_news = News.objects.filter(file_name=file).first()
+							if (check_news):
+								continue
+
+			                # read json data from file
+							data = json.load(codecs.open(os.path.join(root, file), mode = 'r', encoding = 'utf-8', errors = 'ignore'))
+							url = data['url'];
+							content = data['content']
+							title = data['title']
+
+							sents = []
+							sents.append(data['title'].split()) # Split line on space to get syllables + etc.
+							title = tokenize_a_sentence(sents)
+							title = stop_words.remove_stop_words(title)
+
+							sents = []
+							sents.append(data['description'].split()) # Split line on space to get syllables + etc.
+							description = tokenize_a_sentence(sents)
+							description = stop_words.remove_stop_words(description)
+
+							sents = []
+							sents.append(data['content'].split()) # Split line on space to get syllables + etc.
+							content = tokenize_a_sentence(sents)
+							content = stop_words.remove_stop_words(content)
+
+							data_output = {}
+							data_output['url'] = url
+							data_output['title'] = ' '.join(title)
+							data_output['description'] = ' '.join(description)
+							data_output['time'] = dir
+							data_output['content'] = ' '.join(content)
+
+							# write tokenized data to database
+							import time
+							time_to_insert = datetime.strptime(dir, '%Y_%m_%d').date()
+
+							# print (title)
+							news = News(url = url, title = data_output['title'], description = data_output['description'], date = time_to_insert, content=data_output['content'], file_name=file)
+							news.save()
+
+
+							# write tokenized data to file
+							f = codecs.open(os.path.join(output_dir_date, file), mode = 'w', encoding = 'utf-8')
+							json.dump(data_output, f, ensure_ascii=False, indent=4)
+							f.close()
+							number_of_files+=1
+						except:
 							continue
-
-		                # read json data from file
-						data = json.load(codecs.open(os.path.join(root, file), mode = 'r', encoding = 'utf-8', errors = 'ignore'))
-						url = data['url'];
-						content = data['content']
-						title = data['title']
-
-						sents = []
-						sents.append(data['title'].split()) # Split line on space to get syllables + etc.
-						title = tokenize_a_sentence(sents)
-						title = stop_words.remove_stop_words(title)
-
-						sents = []
-						sents.append(data['description'].split()) # Split line on space to get syllables + etc.
-						description = tokenize_a_sentence(sents)
-						description = stop_words.remove_stop_words(description)
-
-						sents = []
-						sents.append(data['content'].split()) # Split line on space to get syllables + etc.
-						content = tokenize_a_sentence(sents)
-						content = stop_words.remove_stop_words(content)
-
-						data_output = {}
-						data_output['url'] = url
-						data_output['title'] = ' '.join(title)
-						data_output['description'] = ' '.join(description)
-						data_output['time'] = dir
-						data_output['content'] = ' '.join(content)
-
-						# write tokenized data to database
-						import time
-						time_to_insert = datetime.strptime(dir, '%Y_%m_%d').date()
-
-						# print (title)
-						news = News(url = url, title = data_output['title'], description = data_output['description'], date = time_to_insert, content=data_output['content'], file_name=file)
-						news.save()
-						# write tokenized data to file
-						f = codecs.open(os.path.join(output_dir_date, file), mode = 'w', encoding = 'utf-8')
-						json.dump(data_output, f, ensure_ascii=False, indent=4)
-						f.close()
-	return
+	return number_of_files

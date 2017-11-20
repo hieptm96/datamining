@@ -1,9 +1,12 @@
 from django.http import HttpResponse
 from .tokenizer.scripts import vn_tokenizer
 from .vocabulary import vocabulary_set
-from .tf_idf import tfidf
+from .tfidf import tfidf
+from .cluster import cluster
+from .tfpdf import tfpdf
 
 import numpy
+import time
 
 import nltk
 import string
@@ -17,27 +20,20 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from django.shortcuts import render
 
-def index(request):
-  vn_tokenizer.tokenize()
-  result = tfidf.execute_tfidf('2017-11-01', '2017-11-02')
-  f = open('test.txt', 'w')
-  f.write(str(result))
+def clustering(request):
+    cluster.clustering('2017-11-10', '2017-11-10')
+    return HttpResponse("Done")
 
-  matrixValue = []
-  for i in range(len(result)):
-    row = []
-    for j in range(len(result)):
-      numValue = cosine_similarity(result[i], result[j])[0][0]
-      row.append(numValue)
-    matrixValue.append(row)
+def ranking(request):
+    tfpdf.ranking_topic('2017-11-10', '2017-11-10')
+    return HttpResponse('Done')
 
-  # print (len(result[0]))
-  # return HttpResponse(result)
+def process_raw_data(request):
+    start_time = time.time()
+    number_of_files = vn_tokenizer.tokenize()
+    end_time = time.time()
+    return HttpResponse("Proceed " + str(number_of_files) + " file(s) in " + str(end_time-start_time))
 
-  # return HttpResponse(cosine_distance(result[0], result[0]))
-  return render(request, "index.html", {
-    'matrixValue': matrixValue
-  });
 
 def make_vocabulary_set(request):
     vocabulary_set.make_vocabulary_set()

@@ -17,11 +17,28 @@ class News(models.Model):
   content = models.TextField()
   date = models.DateField(blank=True, null=True)
   file_name = models.TextField()
-  add_to_vocabulary_set = models.IntegerField(default=0)
+  website_id = models.IntegerField()
+
+class Time_Period(models.Model):
+  total_news = models.IntegerField()
+  fromDate = models.DateField()
+  toDate = models.DateField()
 
 class Cluster(models.Model):
   cluster_core = models.IntegerField()
-  numOfDocuments = models.IntegerField()
+  number_of_news = models.IntegerField()
+
+class Cluster_Time_Period(models.Model):
+  cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
+  time_period = models.ForeignKey(Time_Period, on_delete=models.CASCADE)
+
+class Cluster_News(models.Model):
+  cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
+  news = models.ForeignKey(News, on_delete=models.CASCADE)
+
+class Website(models.Model):
+  name = models.TextField()
+  weight = models.FloatField()
 
 class DocumentRepresentation(models.Model):
   representation = models.TextField()
