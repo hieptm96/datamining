@@ -1,0 +1,17 @@
+<h2>From {{ startDate }} to {{ endDate }}</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Ranking</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in data %}
+    <tr>
+        <td style="padding: 15px;">{{ item.name }}</td>
+        <td>{{ item.ranking }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
