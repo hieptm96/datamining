@@ -2,7 +2,7 @@
 import time
 
 # import models
-from ...models import News, Vocabulary, Cluster, Time_Period, Cluster_Time_Period, Cluster_News
+from ...models import News, Cluster, Time_Period, Cluster_Time_Period, Cluster_News
 from ..tfidf import tfidf
 
 #Calc tfidf and cosine similarity

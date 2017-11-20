@@ -27,6 +27,7 @@ class Time_Period(models.Model):
 class Cluster(models.Model):
   cluster_core = models.IntegerField()
   number_of_news = models.IntegerField()
+  hot_level = models.FloatField()
 
 class Cluster_Time_Period(models.Model):
   cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
@@ -39,12 +40,3 @@ class Cluster_News(models.Model):
 class Website(models.Model):
   name = models.TextField()
   weight = models.FloatField()
-
-class DocumentRepresentation(models.Model):
-  representation = models.TextField()
-  cluster = models.ForeignKey(Cluster, on_delete=models.CASCADE)
-
-class Vocabulary(models.Model):
-  fromDate = models.DateField()
-  toDate = models.DateField()
-  vocabulary_set = models.TextField()

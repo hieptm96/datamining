@@ -1,6 +1,5 @@
 from django.http import HttpResponse
 from .tokenizer.scripts import vn_tokenizer
-from .vocabulary import vocabulary_set
 from .tfidf import tfidf
 from .cluster import cluster
 from .tfpdf import tfpdf
@@ -33,11 +32,6 @@ def process_raw_data(request):
     number_of_files = vn_tokenizer.tokenize()
     end_time = time.time()
     return HttpResponse("Proceed " + str(number_of_files) + " file(s) in " + str(end_time-start_time))
-
-
-def make_vocabulary_set(request):
-    vocabulary_set.make_vocabulary_set()
-    return HttpResponse("Make vocabulary set succeed")
 
 def remove(request):
   stopWords = ["nhận", "rằng", "cao", "nhà", "quá", "riêng", "gì", "muốn", "rồi", "số", "thấy", "hay", "lên", "lần",

@@ -9,7 +9,6 @@ urlpatterns = [
   # url /test
   url(r'^clustering', IndexController.clustering, name='clustering'),
   url(r'^top-word', IndexController.remove, name='remove'),
-  url(r'^make-vocabulary-set', IndexController.make_vocabulary_set, name='make_vocabulary_set'),
   url(r'^process-raw-data', IndexController.process_raw_data, name='process_raw_data'),
   url(r'^ranking', IndexController.ranking, name='ranking'),
 ]

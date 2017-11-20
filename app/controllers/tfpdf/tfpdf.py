@@ -1,5 +1,5 @@
 # import models
-from ...models import News, Vocabulary, Cluster, Time_Period, Cluster_Time_Period, Cluster_News, Website
+from ...models import News, Cluster, Time_Period, Cluster_Time_Period, Cluster_News, Website
 import math
 websites=[]
 time_period = {}
@@ -53,7 +53,11 @@ def tfpdf(cluster):
         Ns = website['number_of_news']
 
         # jt la do hot
-        jt += normF(Djs, website) * math.exp(Djs/Ns) * float(website['weight'])
+        jt += normF(Djs, website) * math.exp(Djs/Ns) * website['weight']
+
+    # save to database
+    cluster.hot_level = jt
+    cluster.save()
     print('Hot level of topic ' + str(cluster.id) + ' is ' + str(jt))
 
 

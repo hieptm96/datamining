@@ -1,5 +1,5 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
-from ...models import News, Vocabulary
+from ...models import News
 
 def make_doc_list(news_objects):
     doc_list = []
