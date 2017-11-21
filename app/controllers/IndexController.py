@@ -28,7 +28,41 @@ def test(request):
     fromDate = request.POST.get("from_date")
     toDate = request.POST.get("to_date")
     print (fromDate)
-    data = result_controller.show_result(fromDate, toDate)
+    # data = result_controller.show_result(fromDate, toDate)
+    data = [
+      {
+        'name': 'a',
+        'ranking': 1,
+        'news': [
+          {
+            'title': 'Bai bao 1',
+            'url': '#'
+          },
+          {
+            'title': 'Bai bao 2',
+            'url': '#'
+          },
+          {
+            'title': 'Bai bao 3',
+            'url': '#'
+          }
+        ]
+      },
+      {
+        'name': 'b',
+        'ranking': 2,
+        'news': [
+          {
+            'title': 'Bai bao 4',
+            'url': '#'
+          },
+          {
+            'title': 'Bai bao 5',
+            'url': '#'
+          }
+        ]
+      },
+    ]
     return render(request, "test.html", {
       "startDate": request.POST.get("from_date"),
       "endDate": request.POST.get("to_date"),
