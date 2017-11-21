@@ -13,13 +13,6 @@ def clustering(fromDate, toDate):
     # threshold of cosine similarity
     threshold = 0.2
 
-    # get cluster
-    time_period_object = Time_Period.objects.filter(fromDate=fromDate, toDate=toDate).first()
-
-    # create if not exist
-    if(not time_period_object):
-        time_period_object = Time_Period.objects.create(fromDate=fromDate, toDate=toDate)
-
 
     # get all news between fromDate and toDate
     news_objects = News.objects.filter(date__range=(fromDate, toDate))
@@ -66,6 +59,12 @@ def clustering(fromDate, toDate):
     # insert clusters to database
     print ("adding clusters of (" + fromDate + ", " + toDate +") to database...")
     try:
+        # get time_period
+        time_period_object = Time_Period.objects.filter(fromDate=fromDate, toDate=toDate).first()
+
+        # create if not exist
+        if(not time_period_object):
+            time_period_object = Time_Period.objects.create(fromDate=fromDate, toDate=toDate)
         time_period_object.total_news = len(news_objects)
         time_period_object.save()
         Cluster_Time_Period.objects.filter(time_period_id=time_period_object.id).delete()

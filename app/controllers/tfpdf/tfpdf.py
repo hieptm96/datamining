@@ -9,24 +9,28 @@ def website_index():
     news_objects = News.objects.all()
     for news in news_objects:
         if (news.website_id is None):
+            print ("url", news.url)
             for website in website_objects:
                 if (website.name in news.url):
                     news.website_id = website.id
                     news.save()
                     break
     for website in website_objects:
-        query = 'SELECT * FROM app_news as n JOIN app_cluster_news as cn ON n.id = cn.news_id JOIN app_cluster_time_period as ctp ON cn.cluster_id = ctp.cluster_id where ctp.time_period_id = 2 AND n.website_id = ' + str(website.id)
+        query = 'SELECT * FROM app_news as n JOIN app_cluster_news as cn ON n.id = cn.news_id JOIN app_cluster_time_period as ctp ON cn.cluster_id = ctp.cluster_id where ctp.time_period_id = ' + str(time_period.id) + ' AND n.website_id = ' + str(website.id)
         news_objects_of_website = News.objects.raw(query)
         this_website={}
         this_website['id'] = website.id
         this_website['number_of_news'] = len(list(news_objects_of_website))
         this_website['weight'] = website.weight
+        print ("website ", website.name)
+        print ("len ", len(list(news_objects_of_website)))
         sumW=0.0
         for cluster in Cluster.objects.filter(cluster_time_period__time_period_id = time_period.id):
             news_objects_of_cluster = News.objects.filter(cluster_news__cluster_id = cluster.id, website_id = website.id)
             Dcs = len(news_objects_of_cluster)
             sumW +=Dcs**2 + 0.0
         this_website['sumW'] = sumW
+        global websites
         websites.append(this_website)
 
 
@@ -51,7 +55,8 @@ def tfpdf(cluster):
         Djs = len(news_objects_of_cluster)
         # Ns la so luong bai bao cua website s
         Ns = website['number_of_news']
-
+        if (Ns == 0):
+            continue
         # jt la do hot
         jt += normF(Djs, website) * math.exp(Djs/Ns) * website['weight']
 

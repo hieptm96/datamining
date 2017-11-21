@@ -3,6 +3,7 @@ from .tokenizer.scripts import vn_tokenizer
 from .tfidf import tfidf
 from .cluster import cluster
 from .tfpdf import tfpdf
+from .result import result_controller
 
 import numpy
 import time
@@ -23,19 +24,13 @@ def index(request):
     return render(request, "index.html", {});
 
 def test(request):
-    data = [
-      {
-        "name": "Bai bao 1",
-        "ranking": 1
-      },
-      {
-        "name": "Bai bao 2",
-        "ranking": 2
-      }
-    ]
+    fromDate = request.POST.get("from_date")
+    toDate = request.POST.get("to_date")
+    print (fromDate)
+    data = result_controller.show_result(fromDate, toDate)
     return render(request, "test.html", {
-      "startDate": request.POST.get("start_date"),
-      "endDate": request.POST.get("end_date"),
+      "startDate": request.POST.get("from_date"),
+      "endDate": request.POST.get("to_date"),
       "data": data
     });
 
