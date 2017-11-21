@@ -13,4 +13,5 @@ urlpatterns = [
   url(r'^top-word', IndexController.remove, name='remove'),
   url(r'^process-raw-data', IndexController.process_raw_data, name='process_raw_data'),
   url(r'^ranking', IndexController.ranking, name='ranking'),
+  url(r'^lda', IndexController.lda, name='lda'),
 ]

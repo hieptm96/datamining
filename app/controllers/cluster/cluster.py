@@ -81,4 +81,5 @@ def clustering(fromDate, toDate):
     except Exception:
         print ("some errors")
     print ("added clusters to database successfully")
+    print (list(map(len, clusters_list)))
     return

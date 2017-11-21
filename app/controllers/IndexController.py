@@ -4,6 +4,7 @@ from .tfidf import tfidf
 from .cluster import cluster
 from .tfpdf import tfpdf
 from .result import result_controller
+from .lda import test_LDA
 
 import numpy
 import time
@@ -33,6 +34,9 @@ def test(request):
       "endDate": request.POST.get("to_date"),
       "data": data
     });
+def lda(request):
+    result = test_LDA.display_topics()
+    return HttpResponse(result)
 
 def clustering(request):
     cluster.clustering('2017-11-10', '2017-11-10')

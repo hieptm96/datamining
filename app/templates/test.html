@@ -2,15 +2,19 @@
 <table border="1">
   <thead>
     <tr>
+      <td>STT</td>
       <td>Name</td>
       <td>Ranking</td>
+      <td>Number of documents</td>
     </tr>
   </thead>
   <tbody>
     {% for item in data %}
     <tr>
+        <td>{{ forloop.counter }}</td>
         <td style="padding: 15px;">{{ item.name }}</td>
         <td>{{ item.ranking }}</td>
+        <td>{{ item.number_of_news }}</td>
     </tr>
     {% endfor %}
   </tbody>
