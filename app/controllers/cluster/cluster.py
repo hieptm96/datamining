@@ -8,6 +8,10 @@ from ..tfidf import tfidf
 #Calc tfidf and cosine similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import euclidean_distances
+import scipy
+import numpy as np
+
 
 def clustering(fromDate, toDate):
     # threshold of cosine similarity
@@ -42,10 +46,23 @@ def clustering(fromDate, toDate):
         this_document["id"] = news_objects[news_index].id
         this_document["news_index"] = news_index
 
-        # get max similarity from cosine_similarity
+        # get max similarity from 	_similarity
         for cluster in clusters_list:
             for document in cluster['documents']:
-                topic_similarity = cosine_similarity(tfidf_matrix[news_index], tfidf_matrix[document['news_index']])[0][0]
+                a = tfidf_matrix[news_index]
+                a = np.array(a)
+                a = a.reshape(-1)
+                b = tfidf_matrix[document['news_index']]
+                b = np.array(b)
+                b = b.reshape(-1)
+                #pearsonr distance
+                #topic_similarity = abs(scipy.stats.pearsonr(a,b)[0])
+                #Averaged Kullback-Leibler Divergence
+                #topic_similarity= scipy.stats.entropy(a,b)
+                #euclidean_ similarity
+                #topic_similarity = 1/(1+ euclidean_distances(tfidf_matrix[news_index], tfidf_matrix[document['news_index']])[0][0])
+                #cosine_similarity
+                #topic_similarity = cosine_similarity(tfidf_matrix[news_index], tfidf_matrix[document['news_index']])[0][0]
                 print ("news id " + str(news_objects[news_index].id) + " vs news id " + str(document["id"]) + ": " + str(topic_similarity) )
                 if (topic_similarity >= threshold and topic_similarity > max_topic_similatary):
                     belong_to_cluster = cluster
