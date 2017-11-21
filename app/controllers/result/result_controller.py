@@ -25,5 +25,12 @@ def show_result(fromDate, toDate):
             element['name'] = News.objects.get(id = cluster_object.cluster_core).title
         element['ranking'] = cluster_object.hot_level
         element['number_of_news'] = cluster_object.number_of_news
+        element['news']=[]
+        news_objects = News.objects.filter(cluster_news__cluster_id=cluster_object.id)
+        for news in news_objects:
+            this_news = {}
+            this_news['title'] = news.title
+            this_news['url'] = news.url
+            element['news'].append(this_news)
         result.append(element)
     return result

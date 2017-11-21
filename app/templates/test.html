@@ -1,41 +1,23 @@
-<<<<<<< HEAD
-<h2>From {{ startDate }} to {{ endDate }}</h2>
-<table border="1">
-  <thead>
-    <tr>
-      <td>STT</td>
-      <td>Name</td>
-      <td>Ranking</td>
-      <td>Number of documents</td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for item in data %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td style="padding: 15px;">{{ item.name }}</td>
-        <td>{{ item.ranking }}</td>
-        <td>{{ item.number_of_news }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-=======
 {% extends 'layouts/app.html' %}
 {% block content %}
   <h2>From {{ startDate }} to {{ endDate }}</h2>
   <table border="1">
     <thead>
       <tr>
-        <td>Name</td>
-        <td>Ranking</td>
+        <td>Số thứ tự</td>
+        <td>Chủ đề</td>
+        <td>Mức độ "hot"</td>
+        <td>Số lượng bài báo</td>
+        <td>Liên kết</td>
       </tr>
     </thead>
     <tbody>
       {% for item in data %}
       <tr>
+          <td>{{forloop.counter}}</td>
           <td style="padding: 15px;">{{ item.name }}</td>
           <td>{{ item.ranking }}</td>
+          <td>{{ item.number_of_news}}</td>
           <td><button class="btn btn-success" data-toggle="modal" data-target="#detail-{{ forloop.counter }}">View</button></td>
       </tr>
 
@@ -48,13 +30,15 @@
               <h4 class="modal-title" id="myModalLabel">Detail</h4>
             </div>
             <div class="modal-body">
+              <ol>
               {% for new in item.news %}
-                <p><a href="{{ new.url }}">{{ new.title }}</a></p>
+                <li><p><a href="{{ new.url }}" target="_blank">{{ new.title }}</a></p></li>
               {% endfor %}
+            </ol>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+
             </div>
           </div>
         </div>
@@ -64,5 +48,3 @@
     </tbody>
   </table>
 {% endblock %}
-
->>>>>>> 82af0e1586036f6fbc15f77b9d2c3a9c13391941
