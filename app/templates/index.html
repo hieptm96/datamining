@@ -1,12 +1,26 @@
-<table border="1">
-  <tbody>
-    {% for array in matrixValue %}
-    {{index}}
-    <tr>
-      {% for value in array %}
-        <td style="padding: 15px;">{{ value }} ({{forloop.parentloop.counter}}, {{forloop.counter}})</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <form action="/test" method="POST">
+      {% csrf_token %}
+      <table>
+        <tbody>
+          <tr>
+            <td>Select begin date:</td>
+            <td><input type="date" name="start_date"></td>
+          </tr>
+          <tr>
+            <td>Select end data:</td>
+            <td><input type="date" name="end_date"></td>
+          </tr>
+          <tr>
+            <td><input type="submit"></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </body>
+</html>

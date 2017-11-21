@@ -5,7 +5,9 @@ from .controllers import IndexController
 
 urlpatterns = [
   # url /
-  url(r'^$', views.index, name='index'),
+  # url(r'^$', views.index, name='index'),
+  url(r'^$', IndexController.index, name='index'),
+  url(r'^test', IndexController.test, name='test'),
   # url /test
   url(r'^clustering', IndexController.clustering, name='clustering'),
   url(r'^top-word', IndexController.remove, name='remove'),

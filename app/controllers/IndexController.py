@@ -19,6 +19,26 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from django.shortcuts import render
 
+def index(request):
+    return render(request, "index.html", {});
+
+def test(request):
+    data = [
+      {
+        "name": "Bai bao 1",
+        "ranking": 1
+      },
+      {
+        "name": "Bai bao 2",
+        "ranking": 2
+      }
+    ]
+    return render(request, "test.html", {
+      "startDate": request.POST.get("start_date"),
+      "endDate": request.POST.get("end_date"),
+      "data": data
+    });
+
 def clustering(request):
     cluster.clustering('2017-11-10', '2017-11-10')
     return HttpResponse("Done")
